@@ -1,10 +1,11 @@
 import java.time.Year;
 
-abstract public class People{
+public class People extends Cinema{
     private String name = new String();
     private String surname = new String();
     private String dateOfBirth = new String();
     private char gender = 'n';
+
     public void set_name(String name){
         this.name = name;
     }
@@ -96,7 +97,7 @@ abstract public class People{
         return this.gender;
     }
     public int getYearOfBirth(){
-        String yearStr = this.dateOfBirth.substring(6,10 );
+        String yearStr = this.dateOfBirth.substring(6,10);
         int year = Integer.parseInt(yearStr);
         return year;
     }

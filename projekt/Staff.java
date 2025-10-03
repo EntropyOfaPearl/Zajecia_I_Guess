@@ -8,7 +8,11 @@ public class Staff extends People{
     public Staff(String name, String surname, int pesel, int dayOfBirth, int monthOfBirth, int yearOfBirth, char gender, float salary, String position){
         int pesel_num = String.valueOf(pesel).length();
         if(pesel_num == 11){
-            this.PESEL = pesel;
+            if(get_Staff_By_PESEL(pesel) != null){
+                this.PESEL = pesel;
+            }else{
+                throw new IllegalArgumentException("ERROR: PESEL już istnieje");
+            }
         }else{
             throw new IllegalArgumentException("Error: Make sure that the PESEL number is exactly 11 characters long");
         }
@@ -45,4 +49,5 @@ public class Staff extends People{
     public void addComment(String comment){
         comments.add(comment);
     }
+
 }

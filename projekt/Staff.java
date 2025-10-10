@@ -10,9 +10,9 @@ public class Staff extends People{
     private ArrayList<String>comments = new ArrayList<String>();
     private ArrayList<String[]> schedule = new ArrayList<String[]>();
     public Staff(String name, String surname, int pesel, int dayOfBirth, int monthOfBirth, int yearOfBirth, char gender, float salary, String position, String password) throws NoSuchAlgorithmException{
-        int pesel_num = String.valueOf(pesel).length();
-        if(pesel_num == 11){
-            if(Cinema.get_Staff_By_PESEL(pesel) != null){
+        int peselNum = String.valueOf(pesel).length();
+        if(peselNum == 11){
+            if(Cinema.getStaffByPESEL(pesel) != null){
                 this.PESEL = pesel;
             }else{
                 throw new IllegalArgumentException("ERROR: PESEL already exists");
@@ -20,28 +20,28 @@ public class Staff extends People{
         }else{
             throw new IllegalArgumentException("Error: Make sure that the PESEL number is exactly 11 characters long");
         }
-        set_name(name);
-        set_surname(surname);
-        set_gender(gender);
-        set_dateOfBirth(monthOfBirth, dayOfBirth, yearOfBirth);
+        setName(name);
+        setSurname(surname);
+        setGender(gender);
+        setDateOfBirth(monthOfBirth, dayOfBirth, yearOfBirth);
         this.salary = salary;
         this.position = position;
-        if(Interface.validate_data(password, Interface.PASSWORD_REGEX)){
-            this.password = Interface.hash_String(password);
+        if(Interface.validateData(password, Interface.PASSWORDREGEX)){
+            this.password = Interface.hashString(password);
         }else{
             throw new IllegalArgumentException("ERROR: email doesn't match the allowed expression");
         }
     }
-    public void set_salary(float salary){
+    public void setSalary(float salary){
         this.salary = salary;
     }
-    public void add_bonus(float bonus){
+    public void addBonus(float bonus){
         this.salary += bonus;
     }
-    public void change_value_by_precent(float precent){
+    public void changeValueByPrecent(float precent){
         this.salary = this.salary + (this.salary * precent);
     }
-    public void display_info(){
+    public void displayInfo(){
         int year = Year.now().getValue();
         int currentAge = year - getDateOfBirth().getYear();
         System.out.println("Name: "+getName()+" Surname: "+getSurame()+" sex: "+getGender()+" Date Of birth: "+getDateOfBirth()+" current Age: "+currentAge+" Position: "+this.position);
@@ -49,40 +49,37 @@ public class Staff extends People{
     public float getSalary(){
         return this.salary;
     }
-    public int getPESEL(){
-        return this.PESEL;
-    }
     public String getPosition(){
         return this.position;
     }
-    public void set_Position(String position){
+    public void setPosition(String position){
         this.position = position;
     }
     public void addComment(String comment){
         this.comments.add(comment);
     }
-    public void set_Schedule(){
-        String[] week_schedule = new String[7];
+    public void setSchedule(){
+        String[] weekSchedule = new String[7];
         Scanner scan =  new Scanner(System.in);
         System.out.println("For how many weeks? ");
-        String user_input_weeks = scan.nextLine().toString();
-        int weeks = Integer.parseInt(user_input_weeks);
+        String userInputWeeks = scan.nextLine().toString();
+        int weeks = Integer.parseInt(userInputWeeks);
         System.out.println(" Please insert data for the following month: ");
         for(int i = 0; i < weeks; i++){
             System.out.println("week "+(i+1)+": ");
             for(int j = 0; j < 7; j++){
                 System.out.print("Please insert the working hours of "+getName()+" "+getSurame()+" for " + Interface.getNameDay(j+1));
-                week_schedule[j] = scan.nextLine().toString();
+                weekSchedule[j] = scan.nextLine().toString();
             }
-            this.schedule.add(week_schedule);
+            this.schedule.add(weekSchedule);
 
         }
 
     }
-    public void clear_schedule(){
+    public void clearSchedule(){
         this.schedule.clear();
     }
-    public void display_list(){
+    public void displayList(){
         System.out.println("Displaying the schedule for the following month: ");
         for(int i = 0; i < this.schedule.size(); i++){
             System.out.println("Week "+(i+1)+": ");
@@ -91,20 +88,20 @@ public class Staff extends People{
             }
         }
     }
-    public int get_PESEL(){
+    public int getPESEL(){
         return this.PESEL;
     }
-    void set_password(String password) throws NoSuchAlgorithmException {
-        if(Interface.validate_data(password, Interface.PASSWORD_REGEX)){
-            this.password = Interface.hash_String(password);
+    void setPassword(String password) throws NoSuchAlgorithmException {
+        if(Interface.validateData(password, Interface.PASSWORDREGEX)){
+            this.password = Interface.hashString(password);
         }else{
             throw new IllegalArgumentException("ERROR: email doesn't match the allowed expression");
         }
     }
-    public static boolean log_in(int pesel, String password) throws NoSuchAlgorithmException, InterruptedException{
-        Staff p =Cinema.get_Staff_By_PESEL(pesel);
+    public static boolean logIn(int pesel, String password) throws NoSuchAlgorithmException, InterruptedException{
+        Staff p =Cinema.getStaffByPESEL(pesel);
         if(p.PESEL == pesel && 
-            p.password == Interface.hash_String(password)
+            p.password == Interface.hashString(password)
         ){
             System.out.println("Log in Successfull");
             Thread.sleep(2000);

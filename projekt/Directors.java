@@ -3,16 +3,16 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Directors extends People{
-    private ArrayList<Movies> directed_movies = new ArrayList<Movies>();
+    private final ArrayList<Movies> directedMovies = new ArrayList<Movies>();
     private final Year DEBUT;
-    private ArrayList<String> awards = new ArrayList<String>();
+    private final ArrayList<String> awards = new ArrayList<String>();
     public Directors(String name, String surname,int monthOfBirth, int dayOfBirth, int yearOfBirth, char gender,int DEBUT){
-        set_name(name);
-        set_surname(surname);
-        set_dateOfBirth(monthOfBirth, dayOfBirth, yearOfBirth);
-        set_gender(gender);
+        setName(name);
+        setSurname(surname);
+        setDateOfBirth(monthOfBirth, dayOfBirth, yearOfBirth);
+        setGender(gender);
         Year yearCurrent = Year.now();
-        Year first_movie = Year.of(1903);
+        Year firstMovie = Year.of(1903);
         if(Year.of(DEBUT).isAfter(yearCurrent) || Year.of(DEBUT).isBefore(first_movie)){
             this.DEBUT = Year.of(DEBUT);
         }else{
@@ -20,10 +20,10 @@ public class Directors extends People{
         }
     }
     public void add_movie(Movies film){
-        this.directed_movies.add(film);
+        this.directedMovies.add(film);
     }
     public ArrayList<Movies> get_movie_list(){
-        return this.directed_movies;
+        return this.directedMovies;
     }
     public void add_award(String award){
         this.awards.add(award);
@@ -33,7 +33,7 @@ public class Directors extends People{
     }
     public void display_info(){
         int currentAge = Year.now().getValue() - dateOfBirth.getYear();
-        System.out.println("Name: "+name+" surname: "+surname+" age:"+ currentAge + " Date of birth: "+dateOfBirth + " Amount of awards: "+awards.size()+" Amount of directed Movies: "+ directed_movies.size()+" debut year: "+this.DEBUT);
+        System.out.printf("Name: %s surname: %s age: %d Date of birth: %tF Amount of awards: %d Amount of directed Movies: %d debut year: %tY",this.name, this.surname, currentAge, this.dateOfBirth, this.awards.size(),this.directedMovies.size(),this.DEBUT);
     }
     public Year get_debut_year(){
         return this.DEBUT;
@@ -41,16 +41,14 @@ public class Directors extends People{
     public void display_list(){
         Scanner scanner = new Scanner(System.in);
         System.out.println("Which list to display 'm' for movies, 'a' for awards, b for both.");
-        String input = scanner.nextLine().toString();
+        String input = scanner.nextLine();
         switch(input){
             case "m":
-                if(directed_movies.size() > 0){
+                if(!directedMovies.isEmpty()){
                     int counter = 1;
                     System.out.println("This director has made the following movies:");
-                    for(Movies m: directed_movies){
-                        System.out.println("");
-                        System.out.println("");
-                        System.out.println("");
+                    for(Movies m: directedMovies){
+                        System.out.println();
                         System.out.println("["+counter+"]: ");
                         m.display_info();
                     }
@@ -59,7 +57,7 @@ public class Directors extends People{
                 }
                 break;
             case "a":
-                if(awards.size() > 0){
+                if(!awards.isEmpty()){
                     System.out.println("The director got these awards: ");
                     for(String a: awards){
                         System.out.println(a);
@@ -71,7 +69,7 @@ public class Directors extends People{
             default:
                 System.out.println("ERROR: wrong choice selection :((");
         }
-        
+
     }
 
 }

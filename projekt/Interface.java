@@ -6,20 +6,20 @@ import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
 public interface Interface {
-    final String PASSWORD_REGEX = "\"^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\\\.[A-Z]{2,6}$\"";
-    public void add_bonus();
-    public void change_value_by_precent(float precent);
-    public void display_info();
-    public void set_Schedule();
-    public void display_list();
-    public boolean log_in();
-    public static String hash_String(String text) throws NoSuchAlgorithmException{
+    final String PASSWORDREGEX = "\"^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\\\.[A-Z]{2,6}$\"";
+    public void addBonus();
+    public void changeValueByPrecent(float precent);
+    public void displayInfo();
+    public void setSchedule();
+    public void displayList();
+    public boolean logIn();
+    public static String hashString(String text) throws NoSuchAlgorithmException{
         MessageDigest digest = MessageDigest.getInstance("SHA-256");
         byte[] hashbytes = digest.digest(text.getBytes(StandardCharsets.UTF_8));
         String hex = HexFormat.of().formatHex(hashbytes);
         return hex;
     }
-   public static boolean validate_data(String data, String reg_Exp){
+   public static boolean validateData(String data, String reg_Exp){
         boolean valid = true;
         Pattern pattern = Pattern.compile(reg_Exp);
         if (data == null) {
@@ -39,7 +39,7 @@ public interface Interface {
             case 2:
                 return "Tuesday";
             case 3:
-                return "Wensday";
+                return "Wednesday";
             case 4:
                 return "Thursday";
             case 5:
@@ -52,4 +52,5 @@ public interface Interface {
                 throw new IllegalArgumentException("ERROR: not a valid day.");
         }
     }
+    public void sell();
 }

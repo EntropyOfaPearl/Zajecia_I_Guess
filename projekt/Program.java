@@ -3,9 +3,9 @@ import java.time.LocalDateTime;
 public class Program{
     private LocalDateTime date;
     private Movies film;
-    private Screening_rooms room;
+    private ScreeningRooms room;
     private boolean ended;
-    public Program(int hour,int minute, int day, int month, int year, Movies film, Screening_rooms room){
+    public Program(int hour,int minute, int day, int month, int year, Movies film, ScreeningRooms room){
         try{
             this.date.plusYears(year);
             this.date.plusMonths(month);
@@ -41,7 +41,7 @@ public class Program{
     public Movies get_film(){
         return this.film;
     }
-    public Screening_rooms get_room(){
+    public ScreeningRooms get_room(){
         return this.room;
     }
     public void delay(int hh, int mm, String reason){
@@ -50,7 +50,7 @@ public class Program{
         System.out.println("Reason for delay: ");
         System.out.println(reason);
     }
-    public void set_room(Screening_rooms room){
+    public void set_room(ScreeningRooms room){
         this.room = room;
     }
 

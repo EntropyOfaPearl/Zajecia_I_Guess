@@ -10,10 +10,10 @@ public class Movies extends Cinema{
     private boolean subtitles;
     private LocalDate releaseDate;
     private String description;
-    private double critic_ranking;
-    private ArrayList<Double> audience_rating = new ArrayList<>();
+    private double criticRanking;
+    private ArrayList<Double> audienceRating = new ArrayList<>();
     public static ArrayList<String> genre_list= new ArrayList<String>(); 
-    public Movies(int cost,String title, String originalTitle, String genre, Directors director, String audio_lang, boolean sub,LocalDate release, String description, double critic_ranking){
+    public Movies(int cost,String title, String originalTitle, String genre, Directors director, String audio_lang, boolean sub,LocalDate release, String description, double criticRanking){
         this.title = title;
         this.originalTitle = originalTitle;
         this.genre = genre;
@@ -22,9 +22,9 @@ public class Movies extends Cinema{
         this.subtitles = sub;
         this.releaseDate = release;
         this.cost = cost;
-        Cinema.add_expense(cost);
+        Cinema.addExpense(cost);
         this.description =  description;
-        this.critic_ranking = critic_ranking;
+        this.criticRanking = criticRanking;
     }
     public Directors get_Director(){
         return this.director;
@@ -38,35 +38,35 @@ public class Movies extends Cinema{
     public String genre(){
         return this.genre;
     }
-    public String get_audio_language(){
+    public String getAudioLanguage(){
         return this.audio;
     }
     public boolean subbed(){
         return this.subtitles;
     }
-    public String get_Desc(){
+    public String getDesc(){
         return this.description;
     }
-    public LocalDate get_releaseDate(){
+    public LocalDate getReleaseDate(){
         return this.releaseDate;
     }
-    public void set_Title(String title){
+    public void setTitle(String title){
         this.title = title;
     }
-    public void set_subtitles(){
+    public void setSubtitles(){
         this.subtitles = true;
 
     }
-    public double get_critic_rating(){
-        return this.critic_ranking;
+    public double getCriticRating(){
+        return this.criticRanking;
     }
-    public double get_audience_rating(){
-        if(audience_rating.size()>0){
+    public double getAudienceRating(){
+        if(audienceRating.size()>0){
             double average = 0.00d;
-            for(double r : audience_rating){
+            for(double r : audienceRating){
                 average += r;
             }
-            average /= audience_rating.size();
+            average /= audienceRating.size();
             return average;
         }else{
             System.out.println("There are no audience reviews for this movie yet :((");
@@ -81,7 +81,7 @@ public class Movies extends Cinema{
         System.out.println("Audio language: "+this.audio);
         System.out.println("Is it subbed? : "+this.subtitles);
         System.out.println("Release date : "+this.releaseDate);
-        System.out.println("Critic rating: "+this.critic_ranking);
-        System.out.println("Audience rating: "+get_audience_rating());
+        System.out.println("Critic rating: "+this.criticRanking);
+        System.out.println("Audience rating: "+getAudienceRating());
     }
 }

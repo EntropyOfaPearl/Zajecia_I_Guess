@@ -1,3 +1,3 @@
-public class Seats extends Screening_rooms{
+public class Seats extends ScreeningRooms {
     
 }

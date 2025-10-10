@@ -8,13 +8,13 @@ abstract public class People{
     protected LocalDate dateOfBirth;
     protected char gender = 'n';
 
-    public void set_name(String name){
+    public void setName(String name){
         this.name = name;
     }
-    public void set_surname(String name){
+    public void setSurname(String name){
         this.surname = name;
     }
-    public void set_dateOfBirth(int monthOfBirth, int dayOfBirth, int yearOfBirth){
+    public void setDateOfBirth(int monthOfBirth, int dayOfBirth, int yearOfBirth){
         int yearCurrent = Year.now().getValue();
         if(yearOfBirth >=yearCurrent-13 ){
             throw new IllegalArgumentException("ERROR: you are too young. You must be 13 or older to use the service :((  (we sell your data to CCP <3)");
@@ -28,7 +28,7 @@ abstract public class People{
             throw new IllegalArgumentException("ERROR: invalid date of birth. please make ssure it is set up as yyy:mm:dd");
         }
     }
-    public void set_gender(char gender){
+    public void setGender(char gender){
         if(gender == 'f' || gender == 'm'){
             this.gender = gender;
         }else{

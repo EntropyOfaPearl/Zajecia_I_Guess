@@ -2,7 +2,7 @@ package src.Reservations;
 import src.CinemaManagment.*;
 import java.time.DateTimeException;
 import java.time.LocalDateTime;
-public class Program{
+public class Program  implements Interface{
     private LocalDateTime date;
     private Movies film;
     private ScreeningRooms room;
@@ -55,9 +55,10 @@ public class Program{
     public void setRoom(ScreeningRooms room){
         this.room = room;
     }
+    @Override
     public void displayInfo(){
         System.out.printf("Movie: %n %n");
-        this.film.display_info();
+        this.film.displayInfo();
         System.out.printf("Date: %tH : %tM %tp %n Screening room: %d %n is ended:",this.date,this.date,this.date,this.room.getRoomNumber(),this.is_Screening_Ended());
 
     }

@@ -2,7 +2,9 @@ package src.Cafe;
 
 import java.util.ArrayList;
 
-public class Snacks extends Food{
+import src.CinemaManagment.Interface;
+
+public class Snacks extends Food implements Interface{
     private int sizeGrams;
     private ArrayList<String> allergens = new ArrayList<String>();
     public Snacks(String name, double price, String description, int size){
@@ -29,6 +31,7 @@ public class Snacks extends Food{
             System.out.println("this product has no allergens.");
         }
     }
+    @Override
     public void displayInfo(){
         System.out.printf("%s %n %s %n size: %d g. ", this.name, this.description, this.sizeGrams);
         displayList();

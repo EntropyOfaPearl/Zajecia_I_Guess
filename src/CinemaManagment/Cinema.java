@@ -1,8 +1,15 @@
 package src.CinemaManagment;
 import src.People.*;
 import src.Reservations.*;
+
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HexFormat;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Cinema {
     private static ArrayList<Staff>cinemaStaff = new ArrayList<Staff>();
@@ -15,6 +22,7 @@ public class Cinema {
     private static double income; 
     private static double expenses;
     private final static double MINIMUM_WAGE = 4806.00d;
+    final String PASSWORDREGEX = "\"^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\\\.[A-Z]{2,6}$\"";
     public Cinema(double income, double expenses){
         Cinema.income = income;
         Cinema.expenses = expenses;
@@ -169,5 +177,42 @@ public class Cinema {
     public double getExpenses(){
         return Cinema.expenses;
     }
+
+    
+    public static String hashString(String text) throws NoSuchAlgorithmException{
+        MessageDigest digest = MessageDigest.getInstance("SHA-256");
+        byte[] hashbytes = digest.digest(text.getBytes(StandardCharsets.UTF_8));
+        String hex = HexFormat.of().formatHex(hashbytes);
+        return hex;
+    }
+   public static boolean validateData(String data, String reg_Exp){
+        Pattern patternCheck = Pattern.compile(reg_Exp);
+        Matcher matcher = patternCheck.matcher(data);
+        if(matcher.matches()){
+            return true;
+        }
+        return true;
+    }
+    public static String getNameDay(int day_number){
+        switch(day_number){
+            case 1:
+                return "Monday";
+            case 2:
+                return "Tuesday";
+            case 3:
+                return "Wednesday";
+            case 4:
+                return "Thursday";
+            case 5:
+                return "Friday";
+            case 6:
+                return "Saturday??";
+            case 7:
+                return "Sunday (i think??)";
+            default:
+                throw new IllegalArgumentException("ERROR: not a valid day.");
+        }
+    }
+
     
 }

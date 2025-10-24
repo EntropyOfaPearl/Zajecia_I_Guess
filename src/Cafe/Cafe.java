@@ -5,7 +5,8 @@ import java.time.*;
 import java.util.ArrayList;
 import static java.lang.Integer.parseInt;
 
-public class Cafe{
+
+public class Cafe implements Interface{
     //menus are static because they'll stay the same in different bars
     static private ArrayList <Snacks> menuSnacks = new ArrayList<Snacks>();
     static private ArrayList <Drinks> menuDrinks = new ArrayList<Drinks>();
@@ -15,7 +16,7 @@ public class Cafe{
     private  ArrayList<String> FDAViolations;
     private boolean open;
     Staff barista;
-    public Cafe(int opening_hh,int opening_mm,int closing_hh,int closing_mm, boolean open, Staff barista) {
+    public Cafe (int opening_hh,int opening_mm,int closing_hh,int closing_mm, boolean open, Staff barista) {
         try{
             this.openingHour.plusHours(opening_hh);
             this.openingHour.plusMinutes(opening_mm);
@@ -124,6 +125,7 @@ public class Cafe{
 
 
     }
+    
     public void sellDrink(Drinks d, Customers p){
         int y= Integer.parseInt(String.valueOf(Year.from(p.getDateOfBirth())));
         int age = Integer.parseInt(String.valueOf(Year.now().minusYears(y)));
@@ -161,7 +163,8 @@ public class Cafe{
         return drinkFound;
     }
 
-    static public void displayList(){
+    
+    static public void displayListStatic(){
         System.out.printf("Menu: %n %n");
         int iterator = 1;
         System.out.printf("Snacks: %n");
@@ -208,5 +211,11 @@ public class Cafe{
         }
         System.out.println("Please understand that to enchance user experience we choose not to display prices on the menu. Your total will be shown to you at checkout as we have implemented dynamic pricing to ensure our customers get the experience best tailored to them.");
     }
+    public static void getSnackByName(){
 
+    }
+    @Override
+    public void displayInfo(){
+        System.out.printf("Open from %s : %s to %s : %s  open: %b current staff: %s %n", this.openingHour.getHour() , this.openingHour.getMinute(),this.closingHour.getHour() , this.closingHour.getMinute(),this.open, this.barista.getName());
+    }
 }

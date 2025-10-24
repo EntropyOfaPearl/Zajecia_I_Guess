@@ -23,7 +23,7 @@ public class CustomerUI {
                 System.out.printf("[2].See the cafe menu %n");
                 System.out.printf("[3].See your reservations %n");
                 System.out.printf("[4].Account settings %n");
-                System.out.printf("[5]. Log out. %n");
+                System.out.printf("[0]. Log out. %n");
                 int choice = userInput.nextInt();
                 switch (choice) {
                     case 1:
@@ -34,7 +34,7 @@ public class CustomerUI {
                         }
                         break;
                     case 2:
-                        Cafe.displayList();
+                        Cafe.displayListStatic();
                         break;
                     case 3:
                         ArrayList<Reservation> pReservations = Cinema.getAllCustomerReservations(p);
@@ -60,70 +60,79 @@ public class CustomerUI {
     }
     private static void userSettings(Customers p) throws NoSuchAlgorithmException{
         Scanner userInput = new Scanner(System.in);
-        while(true){
+        while (true) {
             System.out.printf("%s displaying the settings for the user: %n %s", Managment.BACKGROUND_MAGENTA, Managment.ANSI_RESET);
             System.out.printf("%s [0]return. %n", Managment.MAGENTA);
             System.out.printf(" [1]Change user data %n");
             System.out.printf(" [2]Purchase premium/revoke subscription %n");
-            System.out.printf(" [3]change credit card details %n");
-            System.out.printf(" [4]delete credit card info %n");
-            System.out.printf(" [5]Delete user %n %s",Managment.ANSI_RESET);
-            try{
+            System.out.printf(" [3]Change credit card details %n");
+            System.out.printf(" [4]Delete credit/debit card info %n");
+            System.out.printf(" [5]Delete user %n %s", Managment.ANSI_RESET);
+
+            try {
                 int choice = userInput.nextInt();
+                userInput.nextLine();
+
                 switch (choice) {
                     case 1:
                         changeUserDataUI(p);
                         break;
+
                     case 2:
-                        if(p.getMembershipStatus()){
-                            System.out.printf("%n are you sure?? [y/n]");
-                            String c = userInput.nextLine();
-                            if(c.toLowerCase().equals("y")){
+                        if (p.getMembershipStatus()) {
+                            System.out.printf("%nAre you sure?? [y/n]: ");
+                            String c = userInput.nextLine().trim();
+                            if (c.equalsIgnoreCase("y")) {
                                 p.revokeMembership();
-                                System.out.printf("we are greatly sorry to loose a valueable customer:( please come back to us someday!");
+                                System.out.println("We are greatly sorry to lose a valuable customer :( Please come back someday!");
                             }
-                        }else{
-                            System.out.printf("thank you for your purchase~!<33");
+                        } else {
+                            System.out.println("Thank you for your purchase~! <3");
                             p.setPremiumMember();
                         }
                         break;
+
                     case 3:
-                        try{
-                            System.out.printf("%n card number: ");
-                            String cNum = userInput.nextLine();
-                            System.out.printf("%n cvc: ");
-                            String cvc = userInput.nextLine();
-                            System.out.printf("%n exp date mm/yy: ");
-                            String exp = userInput.nextLine();
+                        try {
+                            System.out.printf("%nCard number: ");
+                            String cNum = userInput.nextLine().trim();
+                            System.out.printf("%nCVC: ");
+                            String cvc = userInput.nextLine().trim();
+                            System.out.printf("%nExp date (mm/yy): ");
+                            String exp = userInput.nextLine().trim();
                             p.setCreditCard(cNum, cvc, exp);
-                            System.out.printf("Credit card set up sucesfully :)");
-                        }catch(IllegalArgumentException e){
-                            System.out.printf("there has been a problem setting up your credit card %s %n",e);
+                            System.out.println("Credit card set up successfully :)");
+                        } catch (IllegalArgumentException e) {
+                            System.out.printf("There has been a problem setting up your credit card: %s %n", e);
                         }
                         break;
+
                     case 4:
-                        System.out.printf("%n are you sure?? [y/n]");
-                        String c = userInput.nextLine();
-                        if(c.toLowerCase().equals("y")){
+                        System.out.printf("%nAre you sure?? [y/n]: ");
+                        String c4 = userInput.nextLine().trim();
+                        if (c4.equalsIgnoreCase("y")) {
                             p.clearCardInfo();
-                            System.out.printf("info cleared sucesfully");
+                            System.out.println("Info cleared successfully.");
                         }
-                        break;     
+                        break;
+
                     case 5:
-                        System.out.printf("%n are you sure?? [y/n]");
-                        String ch = userInput.nextLine();
-                        if(ch.toLowerCase().equals("y")){
+                        System.out.printf("%nAre you sure?? [y/n]: ");
+                        String ch = userInput.nextLine().trim();
+                        if (ch.equalsIgnoreCase("y")) {
                             Cinema.deleteCustomer(p);
                         }
-                        break;  
+                        break;
+
                     case 0:
                         return;
+
                     default:
-                        System.out.printf("%s invalid input %s",Managment.RED, Managment.ANSI_RESET);
+                        System.out.printf("%s Invalid input %s%n", Managment.RED, Managment.ANSI_RESET);
                         break;
                 }
-            }catch(NumberFormatException e){
-                System.out.printf("%s %s :( %s",Managment.RED, e.toString(), Managment.ANSI_RESET);
+            } catch (NumberFormatException e) {
+                System.out.printf("%s %s :( %s%n", Managment.RED, e.toString(), Managment.ANSI_RESET);
             }
         }
     }

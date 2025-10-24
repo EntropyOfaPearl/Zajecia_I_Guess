@@ -1,7 +1,7 @@
 package src.Reservations;
 import src.CinemaManagment.*;
 
-public class ScreeningRooms{
+public class ScreeningRooms implements Interface{
     private int room_number;
     private int floor;
     private Seats[][] seatList;
@@ -53,7 +53,8 @@ public class ScreeningRooms{
     public int getFloor(){
         return this.floor;
     }
-    public void displayList(){
+    @Override
+    public void displayInfo(){
         System.out.printf("Details: %n %n Room number: %d floor: %d",this.room_number, this.floor);
         System.out.println("Displaying the layout of the screening room.");
         for(int i = 0; i < this.seatList.length; i++){

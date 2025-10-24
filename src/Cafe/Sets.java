@@ -1,5 +1,8 @@
 package src.Cafe;
-public class Sets extends Food{
+
+import src.CinemaManagment.Interface;
+
+public class Sets extends Food implements Interface{
     private Snacks snack;
     private Drinks drink;
     private int drinkAmount;
@@ -15,6 +18,7 @@ public class Sets extends Food{
         this.price =((snackA * snack.getPrice()) + (drinkA * drink.getPrice()))*0.75;
 
     }
+    @Override
     public void displayInfo(){
         System.out.printf("%s %.2f $    : %n %s %n",this.name, this.price, this.description);
         System.out.printf("The %s set includes: %n %d x %s , %n %d x %s",this.name, this.snackAmount, this.snack.getName(),this.drinkAmount, this.drink.getName());

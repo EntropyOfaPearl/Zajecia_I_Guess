@@ -1,11 +1,14 @@
 package src.Cafe;
-public class Drinks extends Food{
+
+import src.CinemaManagment.Interface;
+
+public class Drinks extends Food implements Interface{
     private int sizeInMl;
     final private boolean PLUS18;
     private String flavour;
     private boolean sugarfree;
     final private String CATEGORY;
-    final private static String[]CATEGORIES = {"Energy drink", "Alcohol", "Soda","Water","Tea","Coffee"};
+    final private static String[]CATEGORIES = {"Energy drink", "Alcohol", "Soda","Water","Tea","Coffee","Ice tea", "Slushie"};
     public Drinks(String name, double price, String description, int size, boolean plus18, String flavour, boolean sugarfree,String category) {
         this.name = name;
         this.price = price;
@@ -44,6 +47,7 @@ public class Drinks extends Food{
         }
         return false;
     }
+    @Override
     public void displayInfo(){
         System.out.printf("Name: %s %n %s size: %d ml flavour: %s sugarfree: %b",this.name, this.sizeInMl, this.flavour,this.sugarfree);
     }

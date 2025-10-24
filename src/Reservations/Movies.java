@@ -3,7 +3,7 @@ import src.People.*;
 import src.CinemaManagment.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
-public class Movies{
+public class Movies implements Interface{
     private float cost;
     private String title;
     private String originalTitle;
@@ -76,7 +76,8 @@ public class Movies{
             return (Double)null;
         }
     }
-    public void display_info(){
+    @Override
+    public void displayInfo(){
         System.out.println("Title: "+this.title);
         System.out.println("Original title: "+this.originalTitle);
         System.out.println("genre:"+this.genre);

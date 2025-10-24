@@ -52,7 +52,7 @@ public class Directors extends People{
                     for(Movies m: directedMovies){
                         System.out.println();
                         System.out.println("["+counter+"]: ");
-                        m.display_info();
+                        m.displayInfo();
                     }
                 }else{
                     System.out.println("This director's movies haven't been uploaded to our site yet");

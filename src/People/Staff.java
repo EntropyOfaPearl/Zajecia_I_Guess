@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 
-public class Staff extends People{
+public class Staff extends People implements InterfacePeople{
 
     private final String PESEL;
     private String password;
@@ -16,7 +16,7 @@ public class Staff extends People{
     private ArrayList<String[]> schedule = new ArrayList<String[]>();
 
     public Staff(String name, String surname, String pesel, int dayOfBirth, int monthOfBirth, int yearOfBirth, char gender, String position, String password) throws NoSuchAlgorithmException{
-        if(Interface.validateData(pesel, "^\\d{11}$")){
+        if(Cinema.validateData(pesel, "^\\d{11}$")){
             if(Cinema.getStaffByPESEL(pesel) == null){
                 this.PESEL = pesel;
             }else{
@@ -35,8 +35,8 @@ public class Staff extends People{
         }else{
             throw new IllegalArgumentException("ERROR: this position does not exist.");
         }
-        if(Interface.validateData(password, Interface.PASSWORDREGEX)){
-            this.password = Interface.hashString(password);
+        if(Cinema.validateData(password, Cinema.PASSWORDREGEX)){
+            this.password = Cinema.hashString(password);
         }else{
             throw new IllegalArgumentException("ERROR: email doesn't match the allowed expression");
         }
@@ -50,7 +50,7 @@ public class Staff extends People{
     public void changeValueByPrecent(float precent){
         this.salary = this.salary + (this.salary * precent);
     }
-
+    @Override
     public void displayInfo(){
         int year = Year.now().getValue();
         int currentAge = year - getDateOfBirth().getYear();
@@ -83,7 +83,7 @@ public class Staff extends People{
         for(int i = 0; i < weeks; i++){
             System.out.println("week "+(i+1)+": ");
             for(int j = 0; j < 7; j++){
-                System.out.print("Please insert the working hours of "+getName()+" "+getSurame()+" for " + Interface.getNameDay(j+1));
+                System.out.print("Please insert the working hours of "+getName()+" "+getSurame()+" for " + Cinema.getNameDay(j+1));
                 weekSchedule[j] = scan.nextLine().toString();
             }
             this.schedule.add(weekSchedule);
@@ -101,7 +101,7 @@ public class Staff extends People{
         for(int i = 0; i < this.schedule.size(); i++){
             System.out.println("Week "+(i+1)+": ");
             for(int j = 0; j < 7; j++){
-                System.out.println(Interface.getNameDay(j+1)+": "+this.schedule.get(i)[j]);
+                System.out.println(Cinema.getNameDay(j+1)+": "+this.schedule.get(i)[j]);
             }
         }
     }
@@ -111,24 +111,24 @@ public class Staff extends People{
     }
 
     void setPassword(String password) throws NoSuchAlgorithmException {
-        if(Interface.validateData(password, Interface.PASSWORDREGEX)){
-            this.password = Interface.hashString(password);
+        if(Cinema.validateData(password, Cinema.PASSWORDREGEX)){
+            this.password = Cinema.hashString(password);
         }else{
             throw new IllegalArgumentException("ERROR: email doesn't match the allowed expression");
         }
     }
-    
-    public static boolean logIn(String pesel, String password) throws NoSuchAlgorithmException {
-        Staff p =Cinema.getStaffByPESEL(pesel);
-        if(p!= null){
-            if(p.PESEL.equals(pesel) && 
-                p.password.equals(Interface.hashString(password))
-            ){
-                return true;
+    @Override
+    public boolean logIn(Object person, String password) {
+            try {
+                Staff p = (Staff)person;
+                if(p.password.equals(Cinema.hashString(password))
+                ){
+                    return true;
+                }
+            } catch (NoSuchAlgorithmException e) {
+               return false;
             }
             return false;
-        }
-        return false;
     }
 
     public ArrayList<String[]> getSchedule(){

@@ -88,7 +88,7 @@ public class DataAnalysis{
     //file name shouldn't have any format. just plain name (ex."Kittens" is acceptable, but  "kittens.txt" is not). The function adds the extensions by itself.
     public static void dumpCustomerData(String filename, ArrayList<Customers>customerList)throws IOException{
         final String FILE_TYPE_REGEXP = "^[^\\s]+\\.[^\\s.]{1,10}$";
-        if(!Interface.validateData(filename, FILE_TYPE_REGEXP)){
+        if(!Cinema.validateData(filename, FILE_TYPE_REGEXP)){
             filename += ".txt";
             File dataDump = new File(filename);
             if (dataDump.createNewFile()) {
@@ -119,6 +119,7 @@ public class DataAnalysis{
             }else{
                 dataWrite.write("There is no avalible data for this customer list.");
             }
+            dataWrite.close();
         }else{
             throw new IllegalArgumentException("Error: the filename provided already has an extension.=");
         }

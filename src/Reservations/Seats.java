@@ -1,5 +1,8 @@
 package src.Reservations;
-public class Seats{
+
+import src.CinemaManagment.Interface;
+
+public class Seats  implements Interface{
     private final boolean VIP;
     private final int ROW;
     private final int SEAT_NUMBER;
@@ -47,6 +50,8 @@ public class Seats{
     public boolean isVIP(){
         return this.VIP;
     }
+
+    @Override
     public void displayInfo(){
         System.out.printf("Number: %d Row: %d Price: %f Vip seat: %b", this.SEAT_NUMBER, this.ROW, this.price, this.VIP);
     }

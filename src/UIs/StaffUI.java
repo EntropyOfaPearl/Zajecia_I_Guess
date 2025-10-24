@@ -14,18 +14,10 @@ public class StaffUI {
         switch (p.getPosition()) {
             case "clerk":
             case "cleaner":
+                scheduleDisplay(p);
+                break;
             case "barista":
-                System.out.printf(" %s Displaying your schedule for the following month ;) %s %n",Managment.MAGENTA,Managment.ANSI_RESET);
-                if(!p.getSchedule().isEmpty()){
-                    p.displayList();
-                }else{
-                    System.out.printf("%s Sorry there is no schedule yet:(( Please contact your manager and HR %s %n", Managment.RED, Managment.ANSI_RESET);
-                }
-                System.out.printf("Log out [y/n]");
-                String choice = skan.nextLine();
-                if(choice.toLowerCase().equals("y")){
-                    return;
-                }
+                
                 break;
             case "HR":
                 humanResources();
@@ -40,17 +32,34 @@ public class StaffUI {
                 break;
         }
     }
-
+    private static boolean logout(){
+        Scanner skan = new Scanner(System.in);
+        System.out.printf("Log out [y/n]");
+        String choice = skan.nextLine();
+        if(choice.toLowerCase().equals("y")){
+            return true;
+        }
+        return false;
+    }
     //These functions will only be used here therefore they have private access :)
+    private static void scheduleDisplay(Staff p){
+        Scanner skan = new Scanner(System.in);
+        System.out.printf(" %s Displaying your schedule for the following month ;) %s %n",Managment.MAGENTA,Managment.ANSI_RESET);
+        if(!p.getSchedule().isEmpty()){
+            p.displayList();
+        }else{
+            System.out.printf("%s Sorry there is no schedule yet:(( Please contact your manager and HR %s %n", Managment.RED, Managment.ANSI_RESET);
+        }
+    }
     private static void humanResources() throws NoSuchAlgorithmException{ 
         Scanner scan = new Scanner(System.in);
         while(true){
-            System.out.printf("[0] log out");
-            System.out.printf("[1] Hire Staff");
-            System.out.printf("[2] Fire staff");
-            System.out.printf("[3] add comment to a staff member");
-            System.out.printf("[4] promote");
-            System.out.printf("[5] change staff position");
+            System.out.printf("[0] log out %n");
+            System.out.printf("[1] Hire Staff %n");
+            System.out.printf("[2] Fire staff %n");
+            System.out.printf("[3] add comment to a staff member %n");
+            System.out.printf("[4] promote %n");
+            System.out.printf("[5] change staff position %n");
             int c = scan.nextInt();
             switch (c) {
                 case 0:
@@ -62,10 +71,13 @@ public class StaffUI {
                     fireStaff();
                     break;
                 case 3:
-                    addCOmmentToAStaffMember();
+                    addCommentToAStaffMember();
+                    break;
+                case 4:
+                    promote();
                     break;
                 case 5:
-                    promote();
+                    addCommentToAStaffMember();
                     break;
                 default:
                     System.out.printf("%s please provide a valid input %s", Managment.RED, Managment.ANSI_RESET);
@@ -101,59 +113,59 @@ public class StaffUI {
 
     private static void fireStaff(){
         Scanner scan = new Scanner(System.in);
-        System.out.printf("Please provide PESEL of the staff you're willing to fire");
+        System.out.printf("Please provide PESEL of the staff you're willing to fire %n");
         String pesel = scan.nextLine();
         Staff person = Cinema.getStaffByPESEL(pesel);
         if(person!=null){
             Cinema.fireStaff(person);
         }else{
-            System.out.printf("%s sorry there is no employee with this pesel %s", Managment.RED, Managment.ANSI_RESET);
+            System.out.printf("%s sorry there is no employee with this pesel %s %n", Managment.RED, Managment.ANSI_RESET);
         }
     }
     
-    private static void addCOmmentToAStaffMember(){
+    private static void addCommentToAStaffMember(){
         Scanner scan = new Scanner(System.in);
-        System.out.printf("Please provide PESEL of the staff you're willing to comment on");
+        System.out.printf("Please provide PESEL of the staff you're willing to comment on %n");
         String pesel = scan.nextLine();
         Staff person = Cinema.getStaffByPESEL(pesel);
         if(person!=null){
-            System.out.printf("Please insert your comment below: ");
+            System.out.printf("Please insert your comment below: %n");
             String comment = scan.nextLine();
             person.addComment(comment);
         }else{
-            System.out.printf("%s sorry there is no employee with this pesel %s", Managment.RED, Managment.ANSI_RESET);
+            System.out.printf("%s sorry there is no employee with this pesel %s %n", Managment.RED, Managment.ANSI_RESET);
         }
     }
     private static void promote(){
         Scanner scan = new Scanner(System.in);
-        System.out.printf("Please provide PESEL of the lucky employee");
+        System.out.printf("Please provide PESEL of the lucky employee %n");
         String pesel = scan.nextLine();
         Staff person = Cinema.getStaffByPESEL(pesel);
         if(person!=null){
-            System.out.printf("Would you like to %s [1] add a value to the salary [2] increase by a % (please format as 0.00) %s %n",Managment.ITALIC, Managment.ANSI_RESET);
+            System.out.printf("Would you like to %s %n [1] add a value to the salary %n [2] increase by a precent (please format as 0.00) %s %n",Managment.ITALIC, Managment.ANSI_RESET);
             int choice = scan.nextInt();
             switch(choice){
                 case 1:
                     try{
-                        System.out.printf("how much of a raise do they have?");
-                        int raise = scan.nextInt();
+                        System.out.printf("how much of a raise do they have? %n");
+                        float raise = scan.nextFloat();
                         person.addBonus(raise);
                     }catch(NumberFormatException e){
-                        System.out.printf(" %s Error: not a valid input %s", Managment.RED, Managment.ANSI_RESET);
+                        System.out.printf(" %s Error: not a valid input %s %n", Managment.RED, Managment.ANSI_RESET);
                     }
                     break;
                 case 2:
                     try{
-                        System.out.printf("how much of a raise do they have? (in 0.xx)");
+                        System.out.printf("how much of a raise do they have? (in 0.xx) %n");
                         float raise = scan.nextFloat();
                         person.changeValueByPrecent(raise);
                     }catch(NumberFormatException e){
-                        System.out.printf(" %s Error: not a valid input %s", Managment.RED, Managment.ANSI_RESET);
+                        System.out.printf(" %s Error: not a valid input %s %n", Managment.RED, Managment.ANSI_RESET);
                     }
                     break;
             }
         }else{
-            System.out.printf("%s sorry there is no employee with this pesel %s", Managment.RED, Managment.ANSI_RESET);
+            System.out.printf("%s sorry there is no employee with this pesel %s %n", Managment.RED, Managment.ANSI_RESET);
         }
     }
     
@@ -180,14 +192,14 @@ public class StaffUI {
                         try{
                             getCustomerData();
                         }catch(IllegalArgumentException e){
-                            System.out.printf("%s something went wrong:( %s", Managment.RED, Managment.ANSI_RESET);
+                            System.out.printf("%s something went wrong:( %s %n", Managment.RED, Managment.ANSI_RESET);
                         }
                         System.out.printf("Remember, as a part of our partnership with tencent you're required to send diagnostic data to improve general user experience. Happily we optimazied this process for you :) <3 %n");
                         DataAnalysis.sell("userdata.txt");//this actually doesn't do anything, it's just a joke i threw in 
                         break;
                 }
             }catch(NumberFormatException e){
-                System.out.printf("%s  please give a valid input! %s", Managment.RED, Managment.ANSI_RESET);
+                System.out.printf("%s  please give a valid input! %s %n", Managment.RED, Managment.ANSI_RESET);
             }
 
         }

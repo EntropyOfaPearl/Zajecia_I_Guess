@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Scanner;
 import src.People.*;
-import src.People.Staff;
 import src.UIs.*;
 
 public class Managment{
@@ -26,6 +25,7 @@ public class Managment{
         Cinema podziemnyKrag = new Cinema(9999.99, 999.99);
         SampleData.createSampleCustomers();
         SampleData.createSampleStaff();
+        SampleData.createSampleFood();
 
         Scanner userInput = new Scanner(System.in);
         int choice = 5;
@@ -49,12 +49,15 @@ public class Managment{
                     String peselLogIn = userInput.nextLine().toString();
                     System.out.printf("%s %n      Password:%s", MAGENTA, ANSI_RESET);
                     String passwordLogInStaff = userInput.nextLine().toString();
-                    if(Staff.logIn(peselLogIn, passwordLogInStaff)){
-                        System.out.printf("%s Log in sucessfull, welcome %s. %n %s", MAGENTA,Cinema.getStaffByPESEL(peselLogIn).getName(), ANSI_RESET);
-                        StaffUI.staffUI(Cinema.getStaffByPESEL(peselLogIn));
-                    }else{
-                        System.out.printf("%s Log in unsuccessful, please try again. %n %s", RED, ANSI_RESET);
-                    } 
+                    Staff p =Cinema.getStaffByPESEL(peselLogIn);
+                    if(p!= null){
+                        if(p.logIn(p, passwordLogInStaff)){
+                            System.out.printf("%s Log in sucessfull, welcome %s. %n %s", MAGENTA,Cinema.getStaffByPESEL(peselLogIn).getName(), ANSI_RESET);
+                            StaffUI.staffUI(Cinema.getStaffByPESEL(peselLogIn));
+                        }else{
+                            System.out.printf("%s Login unsuccessful, please try again. %n %s", RED, ANSI_RESET);
+                        } 
+                    }
 
                     break;
                 case 2:
@@ -63,11 +66,15 @@ public class Managment{
                     String emailLogIn = userInput.nextLine().toString();
                     System.out.printf("%s %n      Password:%s", MAGENTA, ANSI_RESET);
                     String passwordLogIn = userInput.nextLine().toString();
-                    if(Customers.logIn(emailLogIn, passwordLogIn)){
+                    Customers person = Cinema.getCustomerByEmail(emailLogIn);
+                    if(person == null){
+                        System.out.println("user does not exist");
+                    }
+                    if(person.logIn(person, passwordLogIn)){
                         System.out.printf("%s Log in sucessfull, welcome %s. %n %s", MAGENTA,Cinema.getCustomerByEmail(emailLogIn).getName(), ANSI_RESET);
                         CustomerUI.customerUI(Cinema.getCustomerByEmail(emailLogIn));
                     }else{
-                        System.out.printf("%s Log in unsuccessful, please try again. %n %s", RED, ANSI_RESET);
+                        System.out.printf("%s Login unsuccessful, please try again. %n %s", RED, ANSI_RESET);
                     } 
 
                     break;

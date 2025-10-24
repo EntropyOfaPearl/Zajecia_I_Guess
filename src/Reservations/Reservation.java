@@ -1,6 +1,7 @@
 package src.Reservations;
+import src.CinemaManagment.Interface;
 import src.People.*;
-public class Reservation{
+public class Reservation  implements Interface{
     private Customers customer;
     private Program screening;
     private Seats seat;
@@ -31,6 +32,7 @@ public class Reservation{
             this.total *= discount;
         }
     }
+    @Override
     public void displayInfo(){
         System.out.println("Displaying the details of the reservations: ");
         System.out.printf("Name: %s %n Surname: %s %n ",this.customer.getName(), this.customer.getSurame());
